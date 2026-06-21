@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabletop Datasheets Display</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=MedievalSharp&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/futur.css" />
+    <link rel="stylesheet" href="styles/fantasy.css" />
+  </head>
+  <body>
+    <div class="monitor">
+      <div class="power-led"></div>
+      <div class="brand">✦ datasheet catalogue ✦</div>
+
+      <div class="screen">
+        <div class="loading-bar" id="loadingBar">
+          <div class="loading-bar-track"></div>
+        </div>
+
+        <header>
+          <div class="game-switch" id="gameSwitch">
+            <button class="game-btn active" data-game="wh40k">40K</button>
+            <button class="game-btn" data-game="aos">AoS</button>
+          </div>
+          <h1 id="mainTitle">
+            \_/ TITLE \_/
+            <small id="mainSubtitle">// UNIT CATALOGUE //</small>
+          </h1>
+          <div class="crt-select-wrap">
+            <div class="crt-select" id="fileSelect" tabindex="0">
+              <span class="label">— SELECT CATALOG —</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="crt-drop" id="fileDropdown"></div>
+          </div>
+          <span id="status"></span>
+          <span id="cacheBadge"></span>
+        </header>
+
+        <div id="grid"></div>
+
+        <footer class="disclaimer">
+          * DISCLAIMER: This site is a free, unofficial fan tool for tabletop wargaming reference. This project is not affiliated with any game publisher. Data is sourced from public community repositories.
+        </footer>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/cache.js"></script>
+    <script src="js/parser.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

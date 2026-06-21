@@ -1,0 +1,516 @@
+/* ========================================================================
+   THEME: NOBLE HERALDRY — Fantasy
+   Knightly, chivalric aesthetic. Heraldic shields, banners, and
+   illuminated manuscript with azure, argent, or, and gules.
+   ======================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap");
+
+/* ===== PALETTE & BASE ===== */
+body.theme-aos {
+  --knight-blue: #0f2a47;
+  --knight-blue-light: #1e4a78;
+  --knight-blue-pale: #d6e0ed;
+  --silver: #c8c0b4;
+  --silver-bright: #e8e2d8;
+  --gold-leaf: #b8860b;
+  --gold-bright: #d4a017;
+  --gold-dim: #8a6e1a;
+  --ruby: #8b1a1a;
+  --ruby-light: #c04040;
+  --ink: #1a0e08;
+  --ink-dim: #5a4a3a;
+  --ink-muted: #9a8e80;
+  --parchment: #f0e6d6;
+  --parchment-light: #faf3e6;
+  --parchment-bright: #fffaf0;
+  --parchment-dark: #e4d8c4;
+  --border: #d0c0a8;
+  --border-strong: #b8a890;
+  --shadow: rgba(26, 14, 8, 0.08);
+
+  --font-body: "Lora", "Georgia", serif;
+  --font-display: "Cinzel", "Georgia", serif;
+  --card-w: 420px;
+  --color-body-bg: var(--parchment);
+  --color-accent: var(--gold-leaf);
+  --color-accent-dim: var(--gold-dim);
+  --color-highlight: var(--gold-bright);
+  --color-highlight-dim: var(--gold-dim);
+  --color-surface: var(--parchment-bright);
+  --color-surface-alt: var(--parchment-light);
+  --color-bg: var(--parchment);
+  --color-border: var(--border);
+  --color-text: var(--ink);
+  --color-text-dim: var(--ink-dim);
+  --glow-accent: transparent;
+  --glow-highlight: transparent;
+
+  background: var(--parchment);
+  font-family: "Lora", "Georgia", serif;
+  color: var(--ink);
+}
+
+/* ===== MONITOR ===== */
+body.theme-aos .monitor {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 12px;
+  box-shadow: none;
+}
+body.theme-aos .monitor::before,
+body.theme-aos .monitor::after {
+  display: none;
+}
+
+body.theme-aos .power-led {
+  display: none;
+}
+
+body.theme-aos .brand {
+  color: var(--ink-muted);
+  font-family: "Cinzel", serif;
+  letter-spacing: 4px;
+  text-transform: lowercase;
+  font-variant: normal;
+  font-size: 0.45rem;
+  bottom: 4px;
+  left: 24px;
+  opacity: 0.4;
+}
+
+/* ===== SCREEN (HERALDIC FOLIO) ===== */
+body.theme-aos .screen {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(184, 134, 11, 0.03) 0%, transparent 100%),
+    var(--parchment-light);
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  padding: 28px 32px;
+  box-shadow:
+    0 0 0 1px rgba(184, 134, 11, 0.06),
+    0 0 0 1px rgba(200, 192, 180, 0.3) inset,
+    0 2px 16px var(--shadow);
+  position: relative;
+}
+
+body.theme-aos .screen::-webkit-scrollbar {
+  width: 6px;
+}
+body.theme-aos .screen::-webkit-scrollbar-track {
+  background: var(--parchment-dark);
+}
+body.theme-aos .screen::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 0;
+}
+
+/* Heraldic top band — azure, or, gules */
+body.theme-aos .screen::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: 40px; right: 40px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--knight-blue) 15%, var(--gold-leaf) 40%,
+    var(--ruby) 50%, var(--gold-leaf) 60%,
+    var(--knight-blue) 85%, transparent 100%
+  );
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Disable CRT flicker */
+body.theme-aos .screen::after {
+  animation: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* ===== HEADER ===== */
+body.theme-aos header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+body.theme-aos header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-leaf), transparent);
+  opacity: 0.3;
+}
+
+body.theme-aos header h1 {
+  font-family: "Cinzel Decorative", "Cinzel", Georgia, serif;
+  color: var(--knight-blue);
+  font-size: 1.15rem;
+  letter-spacing: 4px;
+  font-weight: 700;
+}
+body.theme-aos header h1 small {
+  font-family: "Lora", Georgia, serif;
+  color: var(--ink-dim);
+  font-size: 0.5rem;
+  letter-spacing: 2px;
+  font-weight: 400;
+  font-style: italic;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+body.theme-aos #status {
+  font-family: "Cinzel", Georgia, serif;
+  letter-spacing: 2px;
+  color: var(--ink-dim);
+  font-size: 0.6rem;
+}
+
+/* ===== GAME SWITCH ===== */
+body.theme-aos .game-switch {
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+}
+body.theme-aos .game-btn {
+  font-family: "Cinzel", Georgia, serif;
+  letter-spacing: 2px;
+  font-size: 0.55rem;
+  color: var(--ink-dim);
+  padding: 6px 16px;
+}
+body.theme-aos .game-btn:first-child {
+  border-right: 1px solid var(--border);
+}
+body.theme-aos .game-btn:hover {
+  background: rgba(15, 42, 71, 0.04);
+  color: var(--knight-blue);
+}
+body.theme-aos .game-btn.active {
+  background: rgba(15, 42, 71, 0.06);
+  color: var(--knight-blue);
+  font-weight: 700;
+}
+
+/* ===== DROPDOWN ===== */
+body.theme-aos .crt-select {
+  background: var(--parchment-bright);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+  font-family: "Lora", Georgia, serif;
+  letter-spacing: 0.3px;
+  font-size: 0.8rem;
+  border-radius: 2px;
+}
+body.theme-aos .crt-select:hover,
+body.theme-aos .crt-select.open {
+  border-color: var(--knight-blue);
+  box-shadow: 0 0 0 1px rgba(15, 42, 71, 0.08);
+  background: var(--parchment-light);
+}
+
+body.theme-aos .crt-drop {
+  background: var(--parchment-bright);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 4px 16px var(--shadow);
+  border-radius: 0 0 2px 2px;
+}
+body.theme-aos .crt-drop::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+}
+
+body.theme-aos .crt-select-opt {
+  color: var(--ink-dim);
+  border-bottom: 1px solid rgba(208, 192, 168, 0.4);
+  font-family: "Lora", Georgia, serif;
+  letter-spacing: 0.3px;
+  font-size: 0.78rem;
+  padding: 8px 14px;
+}
+body.theme-aos .crt-select-opt:hover,
+body.theme-aos .crt-select-opt.highlight {
+  background: rgba(15, 42, 71, 0.03);
+  color: var(--ink);
+}
+body.theme-aos .crt-select-opt.sel {
+  color: var(--knight-blue);
+  background: rgba(15, 42, 71, 0.04);
+  font-weight: 600;
+}
+
+body.theme-aos .crt-select .arrow {
+  color: var(--ink-muted);
+}
+
+/* ===== CARDS (KNIGHTLY ENSIGN) ===== */
+body.theme-aos .card {
+  background: var(--parchment-bright);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 4px var(--shadow);
+  position: relative;
+  border-radius: 2px;
+}
+
+/* Heraldic top bar */
+body.theme-aos .card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--knight-blue) 0%, var(--silver-bright) 20%,
+    var(--gold-leaf) 40%, var(--ruby) 60%,
+    var(--gold-leaf) 80%, var(--silver-bright) 90%,
+    var(--knight-blue) 100%
+  );
+  opacity: 0.2;
+}
+
+body.theme-aos .card:hover {
+  border-color: var(--knight-blue-light);
+  box-shadow: 0 2px 10px rgba(15, 42, 71, 0.06);
+}
+
+body.theme-aos .card-header {
+  background: linear-gradient(180deg, var(--parchment-light), var(--parchment-bright));
+  border-bottom: 1px solid var(--border);
+  padding: 14px 14px 10px;
+  position: relative;
+}
+body.theme-aos .card-header h2 {
+  font-family: "Cinzel", Georgia, serif;
+  color: var(--knight-blue);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+body.theme-aos .card-header .keywords span {
+  border-color: var(--border);
+  color: var(--ink-dim);
+  font-family: "Lora", Georgia, serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.5px;
+  border-radius: 2px;
+  background: rgba(15, 42, 71, 0.02);
+  padding: 1px 7px;
+}
+
+/* ===== STAT NODES (2x2 SHIELD) ===== */
+body.theme-aos .stat-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--parchment-dark);
+  border-bottom: 1px solid var(--border);
+  gap: 1px;
+  padding: 6px;
+}
+body.theme-aos .stat {
+  border: 1px solid var(--border);
+  padding: 10px 4px;
+  background: var(--parchment-bright);
+  position: relative;
+  border-radius: 2px;
+}
+body.theme-aos .stat:nth-child(2n) {
+  border-right: 1px solid var(--border);
+}
+body.theme-aos .stat .label {
+  font-family: "Cinzel", Georgia, serif;
+  color: var(--ink-dim);
+  font-size: 0.5rem;
+  letter-spacing: 2.5px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+body.theme-aos .stat .value {
+  font-family: "Cinzel", Georgia, serif;
+  color: var(--knight-blue);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* ===== CARD BODY ===== */
+body.theme-aos .card-body h3 {
+  font-family: "Cinzel", Georgia, serif;
+  color: var(--knight-blue);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 5px;
+  margin: 14px 0 7px;
+  position: relative;
+}
+body.theme-aos .card-body h3::after {
+  content: "⚜ ⚜ ⚜";
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 0.4rem;
+  letter-spacing: 5px;
+  color: var(--gold-leaf);
+  opacity: 0.2;
+}
+
+body.theme-aos .card-body p {
+  color: var(--ink);
+  font-size: 0.7rem;
+  line-height: 1.65;
+}
+
+/* ===== WEAPON TABLE ===== */
+body.theme-aos .weapon-table {
+  font-family: "Lora", Georgia, serif;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 4px;
+}
+body.theme-aos .weapon-table thead {
+  display: none;
+}
+body.theme-aos .weapon-table tbody {
+  display: block;
+}
+body.theme-aos .weapon-table tr {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(6, 0.6fr);
+  gap: 0;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--knight-blue);
+  background: var(--parchment-bright);
+  margin-bottom: 4px;
+  padding: 6px 8px;
+  align-items: center;
+  transition: background 0.15s;
+}
+body.theme-aos .weapon-table tr:hover {
+  background: var(--knight-blue-pale);
+}
+body.theme-aos .weapon-table td {
+  border: none;
+  padding: 2px 4px;
+  color: var(--ink);
+  font-size: 0.6rem;
+  text-align: center;
+}
+body.theme-aos .weapon-table td.name {
+  font-family: "Cinzel", Georgia, serif;
+  color: var(--knight-blue);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-align: left;
+  white-space: normal;
+}
+body.theme-aos .weapon-table td.keywords {
+  color: var(--ink-muted);
+  font-size: 0.5rem;
+  font-style: italic;
+}
+
+/* ===== ABILITIES (VIRTUES & VOWS) ===== */
+body.theme-aos .abilities-list li {
+  background: var(--parchment-bright);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--knight-blue);
+  padding: 10px 10px;
+  margin-bottom: 6px;
+}
+body.theme-aos .abilities-list li[data-type="activated"] {
+  border-left-color: var(--ruby);
+  background: linear-gradient(90deg, rgba(139, 26, 26, 0.02), transparent 80%);
+}
+body.theme-aos .abilities-list li[data-type="activated"] strong {
+  color: var(--ruby);
+}
+body.theme-aos .abilities-list li strong {
+  font-family: "Cinzel", Georgia, serif;
+  color: var(--knight-blue);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+body.theme-aos .abilities-list li p {
+  font-size: 0.66rem;
+  color: var(--ink);
+  margin-top: 2px;
+}
+body.theme-aos .abilities-list li p em {
+  color: var(--ink-dim);
+  font-size: 0.6rem;
+  font-style: italic;
+}
+
+/* ===== POINTS ===== */
+body.theme-aos .pts {
+  font-family: "Cinzel", Georgia, serif;
+  color: var(--knight-blue);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 10px;
+}
+
+/* ===== ERROR / LOADING ===== */
+body.theme-aos .error {
+  color: var(--ruby);
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 0.8rem;
+}
+body.theme-aos .loading {
+  color: var(--ink-dim);
+  font-family: "Lora", Georgia, serif;
+  font-style: italic;
+}
+
+/* ===== LOADING BAR ===== */
+body.theme-aos .loading-bar {
+  background: var(--parchment-dark);
+  height: 2px;
+}
+body.theme-aos .loading-bar-track {
+  background: linear-gradient(90deg, transparent, var(--gold-leaf), var(--knight-blue), var(--ruby), transparent);
+  width: 45%;
+}
+
+/* ===== DISCLAIMER ===== */
+body.theme-aos footer.disclaimer {
+  border-top: 1px solid var(--border);
+  font-family: "Lora", Georgia, serif;
+  color: var(--ink-muted);
+  font-size: 0.5rem;
+  line-height: 1.5;
+  padding-top: 14px;
+  margin-top: 28px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 820px) {
+  body.theme-aos .monitor {
+    padding: 4px;
+  }
+  body.theme-aos .screen {
+    padding: 16px !important;
+  }
+  body.theme-aos .screen::before {
+    left: 16px; right: 16px;
+  }
+  body.theme-aos .weapon-table tr {
+    grid-template-columns: 1.2fr repeat(6, 0.5fr);
+    padding: 4px 6px;
+  }
+  body.theme-aos .weapon-table td {
+    font-size: 0.5rem;
+  }
+}
