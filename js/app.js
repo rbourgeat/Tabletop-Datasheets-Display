@@ -118,7 +118,8 @@ async function loadCatalogue(fileName) {
     const units = extractUnits(doc);
     if (units.length === 0) {
       const baseName = fileName.replace(/\.cat$/, "");
-      const libName = baseName + " - Library.cat";
+      const faction = baseName.includes(" - ") ? baseName.split(" - ")[0] : baseName;
+      const libName = faction + " - Library.cat";
       if (libName !== fileName && files.includes(libName)) {
         pick(libName, libName.replace(/\.cat$/, ""));
         return;
