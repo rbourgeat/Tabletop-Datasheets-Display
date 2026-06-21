@@ -37,6 +37,7 @@ function pick(value, text) {
   selectedValue = value;
   dropLabel.textContent = text;
   closeDrop();
+  writeUrlState(currentGame, value);
   if (value) loadCatalogue(value);
 }
 
@@ -82,7 +83,13 @@ async function loadListing() {
   showLoading(false);
 
   if (files.length) {
-    pick(files[0], files[0].replace(/\.cat$/, ""));
+    const urlState = readUrlState();
+    const urlGame = urlState.game || "wh40k";
+    if (urlGame === currentGame && urlState.catalog && files.includes(urlState.catalog)) {
+      pick(urlState.catalog, urlState.catalog.replace(/\.cat$/, ""));
+    } else {
+      pick(files[0], files[0].replace(/\.cat$/, ""));
+    }
   }
 }
 
@@ -125,7 +132,7 @@ async function loadCatalogue(fileName) {
 }
 
 // === BOOT ===
-applyTheme("wh40k");
+applyTheme(currentGame);
 
 fileSelect.addEventListener("click", toggleDrop);
 document.addEventListener("click", (e) => { if (!e.target.closest(".crt-select-wrap")) closeDrop(); });
@@ -147,6 +154,10 @@ document.getElementById("gameSwitch").addEventListener("click", async (e) => {
   files = [];
   selectedValue = "";
   await loadListing();
+});
+
+window.addEventListener("popstate", () => {
+  location.reload();
 });
 
 loadListing();

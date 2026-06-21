@@ -1,3 +1,20 @@
+function readUrlState() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    game: params.get("game") || null,
+    catalog: params.get("cat") || null,
+  };
+}
+
+function writeUrlState(game, catalog) {
+  const params = new URLSearchParams();
+  if (game && game !== "wh40k") params.set("game", game);
+  if (catalog) params.set("cat", catalog);
+  const qs = params.toString();
+  const url = qs ? "?" + qs : window.location.pathname;
+  history.pushState({ game, catalog }, "", url);
+}
+
 const GAMES = {
   wh40k: {
     repo: "BSData/wh40k-10e",
@@ -98,7 +115,8 @@ const GAMES = {
 const parser = new DOMParser();
 const CACHE_PREFIX = "wh40k_viz_";
 
-let currentGame = "wh40k";
+const _urlState = readUrlState();
+let currentGame = _urlState.game || "wh40k";
 let selectedValue = "";
 let files = [];
 
