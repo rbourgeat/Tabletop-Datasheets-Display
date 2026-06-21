@@ -193,10 +193,10 @@ function renderCard(u) {
         let html = `<strong>${esc(a.name)}</strong>`;
         if (a.type === "activated") {
           html += `<p><em>${esc(a.Timing)}</em></p>`;
-          if (a.Declare && a.Declare !== "—") html += `<p>${formatDesc(a.Declare)}</p>`;
-          html += `<p>${formatDesc(a.Effect)}</p>`;
+          if (a.Declare && a.Declare !== "—") html += formatDesc(a.Declare);
+          html += formatDesc(a.Effect);
         } else {
-          html += `<p>${formatDesc(a.Effect)}</p>`;
+          html += formatDesc(a.Effect);
         }
         if (a.type === "activated") li.dataset.type = "activated";
         li.innerHTML = html;
@@ -240,7 +240,7 @@ function weaponTable(weapons, isRanged) {
   const fields = isRanged ? g.weaponFieldsRanged : g.weaponFieldsMelee;
 
   let html = '<table class="weapon-table"><thead><tr>';
-  fields.forEach((f) => { html += `<th>${f}</th>`; });
+  fields.forEach((f) => { html += `<th>${f.toUpperCase()}</th>`; });
   html += "</tr></thead><tbody>";
 
   weapons.forEach((w) => {
@@ -248,7 +248,7 @@ function weaponTable(weapons, isRanged) {
     html += `<td class="name">${esc(w.name)}</td>`;
     fields.forEach((f) => {
       if (f === "NAME") return;
-      html += `<td>${esc(w[f] || "—")}</td>`;
+      html += `<td>${formatInline(w[f] || "") || "—"}</td>`;
     });
     html += "</tr>";
   });

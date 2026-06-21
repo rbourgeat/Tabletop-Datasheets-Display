@@ -590,12 +590,15 @@ body:not(.theme-aos) .abilities-list li {
   border-left: 2px solid var(--amber-dim);
   box-shadow: 0 0 4px var(--phosphor-glow);
 }
-.abilities-list li strong {
+.abilities-list li > strong {
   display: block;
   font-size: 0.72rem;
   font-weight: 400;
   letter-spacing: 1px;
   transition: all 0.8s;
+}
+.abilities-list li p strong {
+  display: inline;
 }
 body:not(.theme-aos) .abilities-list li strong {
   color: var(--amber);
