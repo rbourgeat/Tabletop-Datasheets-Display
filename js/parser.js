@@ -1,8 +1,8 @@
 function extractUnits(doc) {
+  const g = getGame();
   const entries = doc.querySelectorAll("selectionEntry");
   const units = [];
   const nameSet = new Set();
-  const g = getGame();
   const isAos = currentGame === "aos";
 
   entries.forEach((entry) => {
@@ -164,6 +164,17 @@ function renderCard(u) {
       s.innerHTML = `<div class="label">${label}</div><div class="value">${esc(u.unitProfile[key] || "—")}</div>`;
       sb.appendChild(s);
     });
+    if (g.unitStatKeys.length < g.unitStatLabels.length) {
+      for (let i = g.unitStatKeys.length; i < g.unitStatLabels.length; i++) {
+        const label = g.unitStatLabels[i];
+        const key = g.unitStatKeys.length > 0 ? g.unitStatKeys[0] : null;
+        const s = document.createElement("div");
+        s.className = "stat";
+        const val = u.unitProfile[label] || u.unitProfile[key] || "—";
+        s.innerHTML = `<div class="label">${label}</div><div class="value">${esc(val)}</div>`;
+        sb.appendChild(s);
+      }
+    }
     card.appendChild(sb);
   }
 
@@ -235,32 +246,10 @@ function weaponTable(weapons, isRanged) {
   weapons.forEach((w) => {
     html += "<tr>";
     html += `<td class="name">${esc(w.name)}</td>`;
-    if (currentGame === "aos") {
-      if (isRanged) {
-        html += `<td>${esc(w.Rng)}</td>`;
-        html += `<td>${esc(w.Atk)}</td>`;
-        html += `<td>${esc(w.Hit)}</td>`;
-        html += `<td>${esc(w.Wnd)}</td>`;
-        html += `<td>${esc(w.Rnd)}</td>`;
-        html += `<td>${esc(w.Dmg)}</td>`;
-        html += `<td class="keywords">${formatInline(w.Ability)}</td>`;
-      } else {
-        html += `<td>${esc(w.Atk)}</td>`;
-        html += `<td>${esc(w.Hit)}</td>`;
-        html += `<td>${esc(w.Wnd)}</td>`;
-        html += `<td>${esc(w.Rnd)}</td>`;
-        html += `<td>${esc(w.Dmg)}</td>`;
-        html += `<td class="keywords">${formatInline(w.Ability)}</td>`;
-      }
-    } else {
-      html += `<td>${esc(w.Range)}</td>`;
-      html += `<td>${esc(w.A)}</td>`;
-      html += `<td>${esc(isRanged ? w.BS : w.WS)}</td>`;
-      html += `<td>${esc(w.S)}</td>`;
-      html += `<td>${esc(w.AP)}</td>`;
-      html += `<td>${esc(w.D)}</td>`;
-      html += `<td class="keywords">${formatInline(w.Keywords)}</td>`;
-    }
+    fields.forEach((f) => {
+      if (f === "NAME") return;
+      html += `<td>${esc(w[f] || "—")}</td>`;
+    });
     html += "</tr>";
   });
 

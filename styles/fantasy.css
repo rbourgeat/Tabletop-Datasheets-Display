@@ -197,6 +197,44 @@ body.theme-aos .game-btn.active {
   font-weight: 700;
 }
 
+.version-switch {
+  display: flex;
+  gap: 0;
+  margin-top: 6px;
+  overflow: hidden;
+}
+body.theme-aos .version-switch {
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+}
+.version-btn {
+  background: transparent;
+  border: none;
+  padding: 3px 10px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+  border-right: 1px solid currentColor;
+  border-color: inherit;
+}
+.version-btn:last-child { border-right: none; }
+body.theme-aos .version-btn {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 0.5rem;
+  color: var(--ink-dim);
+  padding: 3px 12px;
+}
+body.theme-aos .version-btn:hover {
+  background: rgba(15, 42, 71, 0.04);
+  color: var(--knight-blue);
+}
+body.theme-aos .version-btn.active {
+  background: rgba(15, 42, 71, 0.06);
+  color: var(--knight-blue);
+  font-weight: 700;
+}
+
 /* ===== DROPDOWN ===== */
 body.theme-aos .crt-select {
   background: var(--parchment-bright);

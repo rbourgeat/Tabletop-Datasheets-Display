@@ -254,6 +254,41 @@ body:not(.theme-aos) .game-btn.active {
   text-shadow: 0 0 6px var(--phosphor-glow);
 }
 
+.version-switch {
+  display: flex;
+  gap: 0;
+  margin-top: 6px;
+  overflow: hidden;
+}
+body:not(.theme-aos) .version-switch {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.version-btn {
+  background: transparent;
+  color: var(--color-text-dim);
+  border: none;
+  padding: 3px 10px;
+  font-family: var(--font-display);
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+  border-right: 1px solid currentColor;
+  border-color: inherit;
+}
+.version-btn:last-child { border-right: none; }
+body:not(.theme-aos) .version-btn:hover {
+  background: rgba(0, 255, 65, 0.05);
+  color: var(--phosphor);
+}
+body:not(.theme-aos) .version-btn.active {
+  background: rgba(0, 255, 65, 0.1);
+  color: var(--phosphor);
+  text-shadow: 0 0 6px var(--phosphor-glow);
+}
+
 .crt-select-wrap {
   position: relative;
   min-width: 340px;

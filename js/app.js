@@ -7,8 +7,15 @@ const statusEl = document.getElementById("status");
 const grid = document.getElementById("grid");
 const mainTitle = document.getElementById("mainTitle");
 const mainSubtitle = document.getElementById("mainSubtitle");
+const versionSwitch = document.getElementById("versionSwitch");
 
 function showLoading(show) { loadingBar.classList.toggle("active", show); }
+
+function libDisplay(name) {
+  let d = name.replace(/\.cat$/, "");
+  if (currentGame === "aos") d = d.replace(/\s*-\s*Library$/, "");
+  return d;
+}
 
 function showCacheBadge(fromCache) {
   // cache transparent pour l'utilisateur
@@ -19,9 +26,32 @@ function applyTheme(gameKey) {
   document.querySelectorAll(".game-btn").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.game === gameKey);
   });
-  const g = GAMES[gameKey];
+  const info = getGameInfo();
+  const g = getGame();
   mainTitle.innerHTML = g.title;
   mainSubtitle.textContent = g.subtitle;
+
+  versionSwitch.innerHTML = "";
+  Object.entries(info.versions).forEach(([key, ver]) => {
+    const btn = document.createElement("button");
+    btn.className = "version-btn" + (key === currentVersion ? " active" : "");
+    btn.dataset.version = key;
+    btn.textContent = ver.label;
+    btn.addEventListener("click", async () => {
+      if (key === currentVersion) return;
+      currentVersion = key;
+      applyTheme(currentGame);
+      fileDropdown.innerHTML = "";
+      dropLabel.textContent = "— SELECT CATALOG —";
+      grid.innerHTML = "";
+      statusEl.textContent = "";
+      showCacheBadge(false);
+      files = [];
+      selectedValue = "";
+      await loadListing();
+    });
+    versionSwitch.appendChild(btn);
+  });
 }
 
 function closeDrop() { fileSelect.classList.remove("open"); fileDropdown.classList.remove("open"); }
@@ -37,14 +67,14 @@ function pick(value, text) {
   selectedValue = value;
   dropLabel.textContent = text;
   closeDrop();
-  writeUrlState(currentGame, value);
+  writeUrlState(currentGame, currentVersion, value);
   if (value) loadCatalogue(value);
 }
 
 async function loadListing() {
   showLoading(true);
   let fromCache = false;
-  const cacheKey = "listing_" + currentGame;
+  const cacheKey = "listing_" + currentGame + "_" + currentVersion;
 
   try {
     const cached = Cache.get(cacheKey);
@@ -59,6 +89,7 @@ async function loadListing() {
       }
       const data = await resp.json();
       files = data.filter((item) => item.name.endsWith(".cat") && item.type === "file").map((item) => item.name).sort();
+      if (currentGame === "aos") files = files.filter((n) => n.includes(" - Library"));
       Cache.set(cacheKey, files, 30);
     }
 
@@ -67,7 +98,7 @@ async function loadListing() {
       const div = document.createElement("div");
       div.className = "crt-select-opt";
       div.dataset.value = f;
-      const display = f.replace(/\.cat$/, "");
+      const display = libDisplay(f);
       div.textContent = display;
       div.addEventListener("click", () => pick(f, display));
       fileDropdown.appendChild(div);
@@ -86,9 +117,9 @@ async function loadListing() {
     const urlState = readUrlState();
     const urlGame = urlState.game || "wh40k";
     if (urlGame === currentGame && urlState.catalog && files.includes(urlState.catalog)) {
-      pick(urlState.catalog, urlState.catalog.replace(/\.cat$/, ""));
+      pick(urlState.catalog, libDisplay(urlState.catalog));
     } else {
-      pick(files[0], files[0].replace(/\.cat$/, ""));
+      pick(files[0], libDisplay(files[0]));
     }
   }
 }
@@ -101,7 +132,7 @@ async function loadCatalogue(fileName) {
   try {
     let xml;
     let fromCache = false;
-    const cacheKey = "file_" + currentGame + "_" + fileName;
+    const cacheKey = "file_" + currentGame + "_" + currentVersion + "_" + fileName;
 
     const cached = Cache.get(cacheKey);
     if (cached) {
@@ -121,14 +152,14 @@ async function loadCatalogue(fileName) {
       const faction = baseName.includes(" - ") ? baseName.split(" - ")[0] : baseName;
       const libName = faction + " - Library.cat";
       if (libName !== fileName && files.includes(libName)) {
-        pick(libName, libName.replace(/\.cat$/, ""));
+        pick(libName, libDisplay(libName));
         return;
       }
       grid.innerHTML = '<p class="error">NO UNIT ENTRIES FOUND</p>';
       return;
     }
     units.forEach((u) => grid.appendChild(renderCard(u)));
-    statusEl.textContent = fileName.replace(/\.cat$/, "") + " // " + units.length + " UNITS";
+    statusEl.textContent = libDisplay(fileName) + " // " + units.length + " UNITS";
     showCacheBadge(fromCache);
   } catch (e) {
     grid.innerHTML = '<p class="error">ERROR: ' + e.message + "</p>";
@@ -152,6 +183,7 @@ document.getElementById("gameSwitch").addEventListener("click", async (e) => {
   const btn = e.target.closest(".game-btn");
   if (!btn || btn.dataset.game === currentGame) return;
   currentGame = btn.dataset.game;
+  currentVersion = GAMES[currentGame].defaultVersion;
   applyTheme(currentGame);
   fileDropdown.innerHTML = "";
   dropLabel.textContent = "— SELECT CATALOG —";
