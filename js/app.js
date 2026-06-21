@@ -117,6 +117,12 @@ async function loadCatalogue(fileName) {
     const doc = parser.parseFromString(xml, "text/xml");
     const units = extractUnits(doc);
     if (units.length === 0) {
+      const baseName = fileName.replace(/\.cat$/, "");
+      const libName = baseName + " - Library.cat";
+      if (libName !== fileName && files.includes(libName)) {
+        pick(libName, libName.replace(/\.cat$/, ""));
+        return;
+      }
       grid.innerHTML = '<p class="error">NO UNIT ENTRIES FOUND</p>';
       return;
     }
